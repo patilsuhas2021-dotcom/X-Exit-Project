@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "/api"
+  baseURL: window.location.hostname === "localhost" 
+    ? "http://localhost:3001/api" 
+    : "/api"
 });
 
 export const setToken = (token) => {
