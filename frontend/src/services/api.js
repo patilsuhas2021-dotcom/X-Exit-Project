@@ -3,7 +3,7 @@ import axios from "axios";
 const API = axios.create({
   baseURL: window.location.hostname === "localhost" 
     ? "http://localhost:3001/api" 
-    : "/api"
+    : "https://x-exit-project.onrender.com/api"
 });
 
 export const setToken = (token) => {
