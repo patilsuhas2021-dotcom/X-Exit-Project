@@ -20,8 +20,8 @@ export default function HRDashboard() {
         API.get("/resignation"),
         API.get("/interview")
       ]);
-      setResignations(resReg.data);
-      setInterviews(resInt.data);
+      setResignations(resReg.data.data || []);
+      setInterviews(resInt.data.data || []);
     } catch (err) {
       console.error(err);
     }
@@ -30,7 +30,11 @@ export default function HRDashboard() {
   const handleUpdateStatus = async (id, status) => {
     try {
       const exitDate = selectedExitDate[id] || resignations.find(r => r._id === id).lastWorkingDay;
-      await API.patch(`/resignation/${id}`, { status, exitDate });
+      await API.put(`/admin/conclude_resignation`, { 
+        resignationId: id, 
+        approved: status === "APPROVED", 
+        lwd: exitDate 
+      });
       fetchData();
     } catch (err) {
       alert("Failed to update status");

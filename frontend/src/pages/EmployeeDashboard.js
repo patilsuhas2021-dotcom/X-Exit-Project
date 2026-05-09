@@ -19,7 +19,7 @@ export default function EmployeeDashboard() {
   const fetchResignations = async () => {
     try {
       const res = await API.get("/resignation");
-      setResignations(res.data);
+      setResignations(res.data.data || []);
     } catch (err) {
       console.error(err);
     }
@@ -31,7 +31,7 @@ export default function EmployeeDashboard() {
     setError("");
     setSuccess("");
     try {
-      await API.post("/resignation", { lastWorkingDay, reason });
+      await API.post("/resignation", { lwd: lastWorkingDay, reason });
       setSuccess("Resignation submitted successfully!");
       setReason("");
       setLastWorkingDay("");
